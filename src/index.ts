@@ -87,7 +87,7 @@ export default {
         <div class="email-container">
           <h1 class="title">오늘의 질문</h1>
           <div class="question-box">${latestArticle.title}</div>
-          <a href="http://localhost:3000/articles/${latestArticle.documentId}" class="button">아티클 읽기</a>
+          <a href="${process.env.APP_URL}/articles/${latestArticle.documentId}" class="button">아티클 읽기</a>
           <p class="footer">© 2025 일상백과. All rights reserved.</p>
         </div>
       </body>
