@@ -15,7 +15,14 @@ export default {
       },
     });
 
-    schedule.scheduleJob("0 7 * * 1,3,5", async () => {
+    const rule = new schedule.RecurrenceRule();
+    rule.hour = 7; // 10시
+    // rule.minute = 0; // 58분
+    rule.dayOfWeek = [1, 3, 5];
+    rule.tz = "Asia/Seoul"; // 한국 시간(KST)
+
+    schedule.scheduleJob(rule, async () => {
+      console.log("schedule job!!");
       const latestArticle = await strapi.db
         .query("api::article.article")
         .findOne({
@@ -104,7 +111,7 @@ export default {
             html: inlinedHtml,
           };
 
-          const info = await transporter.sendMail(mailOptions);
+          await transporter.sendMail(mailOptions);
           console.log(
             `✅ Email sent: ${mailOptions.subject} ${mailOptions.to}`
           );
