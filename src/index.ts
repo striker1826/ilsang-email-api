@@ -16,8 +16,8 @@ export default {
     });
 
     const rule = new schedule.RecurrenceRule();
-    rule.hour = 7; // 10시
-    // rule.minute = 0; // 58분
+    rule.hour = 7; // 7시
+    // rule.minute = 0; // 0분
     rule.dayOfWeek = [1, 3, 5];
     rule.tz = "Asia/Seoul"; // 한국 시간(KST)
 
@@ -119,9 +119,19 @@ export default {
 
         const subscribers = await strapi.db
           .query("api::subscriber.subscriber")
-          .findMany({ select: ["email"] });
+          .findMany({
+            where: {
+              publishedAt: {
+                $notNull: true,
+              },
+            },
+          });
 
-        subscribers?.forEach((subscriber) => {
+        const uniqueSubscribers = Array.from(
+          new Map(subscribers.map((sub) => [sub.email, sub])).values()
+        );
+
+        uniqueSubscribers?.forEach((subscriber) => {
           sendMail(subscriber.email);
         });
       } catch (error) {
