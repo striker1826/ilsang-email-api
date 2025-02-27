@@ -19,11 +19,10 @@ export default {
     rule.hour = 7; // 7시
     rule.minute = 0; // 0분
     rule.second = 0;
-    rule.dayOfWeek = [1, 3, 5];
+    rule.dayOfWeek = [1, 3];
     rule.tz = "Asia/Seoul"; // 한국 시간(KST)
 
     schedule.scheduleJob(rule, async () => {
-      console.log("schedule job!!");
       const latestArticle = await strapi.db
         .query("api::article.article")
         .findOne({
