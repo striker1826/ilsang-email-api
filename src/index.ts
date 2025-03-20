@@ -19,7 +19,7 @@ export default {
     rule.hour = 7; // 7시
     rule.minute = 0; // 0분
     rule.second = 0;
-    rule.dayOfWeek = [5];
+    rule.dayOfWeek = [3];
     rule.tz = "Asia/Seoul"; // 한국 시간(KST)
 
     schedule.scheduleJob(rule, async () => {
